@@ -1,0 +1,155 @@
+*{
+    box-sizing: border;
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard{
+    width: 100%;
+    
+    background-color: rgb(246, 242, 242);
+}
+.dashboard .navbar__dash{
+    height:60px;
+    padding:5px 2.5%;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(246, 242, 242);
+    align-items: center;
+}
+.dashboard .navbar__dash .logo{
+    width:50px;
+}
+.dashboard .navbar__dash .logo img{ width: 100%;}
+.dashboard .navbar__dash .links{
+    display: flex;
+}
+.dashboard .navbar__dash .links .profile{
+     width: 50px;height:50px;overflow: hidden;
+     border-radius: 50%;
+     margin-right: 10px;
+    }
+.dashboard .navbar__dash .links .profile img{ width:100%;height:100%;}
+.dashboard .navbar__dash .links .logout-user{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.dashboard .navbar__dash .links .logout-user a{
+    font-size: 13px;
+    background-color: red;
+    text-decoration:none;
+    color:#fff;
+    display: inline-block;
+    padding:5px 10px;
+    border-radius: 5px;
+    opacity: .8;
+    transition: .3s;
+    transform: scale(0.98);
+}
+.dashboard .navbar__dash .links .logout-user a:hover{
+    opacity: 1;
+    transform: scale(1);
+}
+.dashboard .body__dash{padding:15px 2.5%;}
+.dashboard .body__dash .statistiques{
+    display: flex;
+    gap: 10px;
+}
+.dashboard .body__dash .statistiques .box-statistiq{
+    width:calc(33.33% - 10px);
+    background-color: #fff;
+    height:160px;
+    overflow: hidden;
+    border-radius: 15px;
+    display: flex;
+}
+.dashboard .body__dash .statistiques .box-statistiq .info{
+    flex:2;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.dashboard .body__dash .statistiques .box-statistiq .info p{
+    font-size: 45px;
+}
+.dashboard .body__dash .statistiques .box-statistiq .icon{
+    flex:1;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dashboard .body__dash .statistiques .box-statistiq .icon i{
+    font-size: 50px;
+    display: inline;
+    padding: 10px;
+    border-radius: 10px;
+}
+.dashboard .body__dash .statistiques .box-statistiq .icon i.icon-user{
+    background-color: rgb(149, 225, 255);
+    color:rgb(85, 207, 255);
+}
+.dashboard .body__dash .statistiques .box-statistiq .icon i.icon-titre{
+    background-color: rgb(167, 255, 149);
+    color:rgb(85, 255, 105);
+}
+.dashboard .body__dash .statistiques .box-statistiq .icon i.icon-artiste{
+    background-color: rgb(255, 218, 149);
+    color:rgb(255, 204, 85);
+}
+
+@media screen and (max-width:1200px){
+    .dashboard .body__dash .statistiques .box-statistiq .info p{
+        font-size: 30px;
+    }
+    .dashboard .body__dash .statistiques .box-statistiq .info h2{
+        font-size: 25px;
+    }
+    .dashboard .body__dash .statistiques .box-statistiq .icon i{
+        font-size: 40px;
+    }
+}
+@media screen and (max-width:1000px){
+    .dashboard .body__dash .statistiques .box-statistiq .info p{
+        font-size: 27px;
+    }
+    .dashboard .body__dash .statistiques .box-statistiq .info h2{
+        font-size: 22px;
+    }
+    .dashboard .body__dash .statistiques .box-statistiq .icon i{
+        font-size: 35px;
+    }
+}
+@media screen and (max-width:800px){
+    .dashboard .body__dash .statistiques .box-statistiq .info p{
+        font-size: 25px;
+    }
+    .dashboard .body__dash .statistiques .box-statistiq .info h2{
+        font-size: 18px;
+    }
+    .dashboard .body__dash .statistiques .box-statistiq .icon i{
+        font-size: 30px;
+    }
+}
+@media screen and (max-width:600px){
+    .dashboard .body__dash .statistiques{
+        flex-direction: column;
+
+    }
+    .dashboard .body__dash .statistiques .box-statistiq{
+        width:100%;
+       
+    }
+    .dashboard .body__dash .statistiques .box-statistiq .info p{
+        font-size: 50px;
+    }
+    .dashboard .body__dash .statistiques .box-statistiq .info h2{
+        font-size: 35px;
+    }
+    .dashboard .body__dash .statistiques .box-statistiq .icon i{
+        font-size: 50px;
+    }
+}
