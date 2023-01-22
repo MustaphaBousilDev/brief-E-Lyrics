@@ -72,77 +72,31 @@ echo $count_user;
                   </div>
             </div>
             <div class="cards-musique my-3 d-flex justify-content-center" style="flex-wrap: wrap;" >
-                <div class="card" style="width: 18rem;background-color: transparent;border: none;margin-bottom: 10px;">
-                    <div style="width: 95%;background-color: rgb(220, 220, 222);margin: auto;">
-                        <img src="https://www.leparisien.fr/resizer/aAoR0NezvoiJtNNP5YKU5cGE3DQ=/932x582/cloudfront-eu-central-1.images.arcpublishing.com/lpguideshopping/NSITFYYHCB7K7ZB5GWEJRPVPJM.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                        <h5 class="card-title">Title E-Lyrics</h5>
-                        <p class="card-text">Mugiwara Luffy</p>
-                        <div class="d-flex gap-2">
-                            <button onclick="editModal.show()" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-success rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-edit-alt' ></i></button>
-                            <button style="width: 30px;height:30px" class="border-0 btn btn-sm btn-danger rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-x'></i></button>
-                            <button onclick="showModal.show()" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-warning rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;color:#fff;" class='bx bx-show-alt'></i></button>
-                        </div>
-                        </div>
-                    </div>
-                </div>
                 
             </div>
         </div>
     </div>
     <div class="modal fade" id="add-new-modal" tabindex="-1" aria-labelledby="add-new-modalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
+          <div class="modal-content add-new-modals">
             <div class="modal-header">
               <h5 class="modal-title" id="add-new-modalLabel" >Add new Lyrics</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" class="js-add-user-form" onsubmit="add__leryx(e)">
+            <form  class="js-add-user-form" onsubmit="add(event)">
             <div class="modal-body">
-                  <label class="mt-2 d-block" style="cursor: pointer;text-align: center;">
-                      <img src="images/user.png" class="js-add-image mx-auto d-block" style="width:150px;height: 150px;object-fit: cover;">
-                      <div class="input-group mb-3">
-                        <input id="image"  onchange="display_image(this.files[0])" type="file" class="form-control" id="inputGroupFile01" required hidden>
-                      </div>
-                      <script>
-                          function display_image(file)
-                          {
-                              let allowed = ['jpg','jpeg','png'];
-  
-                              let ext = file.name.split(".").pop();
-                              
-                              if(allowed.includes(ext.toLowerCase()))
-                              {
-                                  document.querySelector('.js-add-image').src = URL.createObjectURL(file);
-                                  image_added = true;
-                              }else 
-                              {
-                                  alert("Only the following image types are allowed:"+ allowed.toString(", "));
-                              }
-  
-                          }
-                      </script>
-                  </label>
-                    <div class="mt-2">
-                    <label for="name" class="form-label">Titre</label>
-                    <input  type="text" class="form-control" id="title" name="name" placeholder="Name" required>
-                    </div>
-                    <div class="mt-2">
-                    <label for="quantity" class="form-label">Auther Name</label>
-                    <input  type="text" class="form-control" id="auther" name="auther"  required>
-                    </div>
-                    <div class="mt-2">
-                        <textarea   id="words" name="description" class="form-control">
-            
-                        </textarea>
-                    </div>
-                    </div>
+                    
+            </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn-sm btn btn-success rounded-circle d-flex justify-content-center align-items-center" style="width: 25px;height:25px" data-bs-dismiss="modal">+</button>
-                    <button type="button" class="btn-sm btn btn-danger rounded-circle d-flex justify-content-center align-items-center" style="width: 25px;height:25px" data-bs-dismiss="modal">-</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    
                     </div>
+                    <div class="btns d-flex">
+                    <button type="button" class="btn btn-secondary mx-1" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn_add btn-sm  mx-1 btn btn-success rounded-circle d-flex justify-content-center align-items-center" style="width: 25px;height:25px" >+</button>
+                    <button type="button" class="btn_remove btn-sm  mx-1 btn btn-danger rounded-circle d-flex justify-content-center align-items-center" style="width: 25px;height:25px">-</button>
+                    <button type="submit" class="btn submit-save  mx-1 btn-primary" data-bs-dismiss="modal">Save</button>
+                    </div>
+                    
             </form>
           </div>
         </div>
@@ -154,7 +108,7 @@ echo $count_user;
               <h5 class="modal-title" id="edit-new-modalLabel" >Edit Lyrics</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" class="js-add-user-form" onsubmit="add_new(event)">
+            <form method="POST" class="js-edit-user-form">
             <div class="modal-body">
                   <label class="mt-2 d-block" style="cursor: pointer;text-align: center;">
                       <img src="images/user.png" class="js-add-image mx-auto d-block" style="width:150px;height: 150px;object-fit: cover;">
@@ -209,7 +163,7 @@ echo $count_user;
               <h5 class="modal-title" id="add-new-modalLabel" >Show Lyrics</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" class="js-add-user-form" onsubmit="add_new(event)">
+            <form method="POST" class="js-show-user-form">
             <div class="modal-body">
                   <label class="mt-2 d-block" style="cursor: pointer;text-align: center;">
                       <img src="images/user.png" class="js-add-image mx-auto d-block" style="width:150px;height: 150px;object-fit: cover;">
@@ -259,10 +213,199 @@ echo $count_user;
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="assets/js/index.js"></script>
-    <script>
+    <script type="text/javascript">
         const addModal = new bootstrap.Modal('#add-new-modal', {});
         const editModal = new bootstrap.Modal('#edit-new-modal', {});
         const showModal = new bootstrap.Modal('#show-new-modal', {});
+        
+        let container=document.querySelector('.add-new-modals')
+        let counters=0;
+        let form=document.querySelector('.add-new-modals form')
+        let modal_body=document.querySelector('.add-new-modals form .modal-body')
+        //console.log(counters)
+        send_data([], 'read')
+        function send_data(arr, type){
+            console.log(arr)
+            var forms = new FormData();
+           for(let i=0;i<arr.length;i++){
+                for(key in arr[i]){
+                    forms.append(key,arr[i][key])
+                }
+           }
+            forms.append('data_type',type);
+            var ajax = new XMLHttpRequest();
+            ajax.addEventListener('readystatechange',function(){
+            if(ajax.readyState == 4){
+                if(ajax.status == 200){
+                handle_result(ajax.responseText);
+                }else{
+                alert("an error occured");
+                }
+            }
+            });
+            ajax.open('post','music_ajax.php',true);
+            ajax.send(forms);
+	    }
+        ////////////////////////////////////////////////////////////
+        function handle_result(result){
+            console.log('messi')
+            var obj = JSON.parse(result);
+            console.log(obj)
+            
+            if(typeof obj == 'object'){
+                if(obj.data_type == 'read'){
+                    let tbody = document.querySelector(".cards-musique");
+                    let str = "";
+                    if(typeof obj.data == 'object'){
+                        for (var i = 0; i < obj.data.length; i++) {
+                        let row = obj.data[i];
+                        console.log('bitch')
+                        console.log(row)
+                        str += `
+                            <div class="card" style="width: 18rem;background-color: transparent;border: none;margin-bottom: 10px;">
+                            <div style="width: 95%;background-color: rgb(220, 220, 222);margin: auto;">
+                            <div class="card-body">
+                                <h5 class="card-title">${row.singer}</h5>
+                                <p class="card-text">${row.song_name}</p>
+                                <div class="d-flex gap-2">
+                                    <button onclick="editModal.show();getId(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-success rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-edit-alt' ></i></button>
+                                    <button style="width: 30px;height:30px" class="border-0 btn btn-sm btn-danger rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-x'></i></button>
+                                    <button onclick="showModal.show()" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-warning rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;color:#fff;" class='bx bx-show-alt'></i></button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        `;
+                        }
+                        tbody.innerHTML = str;
+                    }else{str = "<tr><td>No records found!</td></tr>";}
+                        
+                }else
+                if(obj.data_type == 'add'){
+                alert(obj.data);
+                send_data([],'read');
+                }else
+                if(obj.data_type == 'edit')
+                {
+                    alert(obj.data);
+                    send_data([],'read');
+                }else
+                if(obj.data_type == 'delete')
+                {
+                    alert(obj.data);
+                    send_data([],'read');
+                }else
+                if(obj.data_type == 'get-edit-row'){
+                let row = obj.data;
+                if(typeof row == 'object'){
+                    
+                    let myModal = document.querySelector(".myModaledit");
+                    
+                    for (key in row){
+                        let input = myModal.querySelector("#"+key);
+                        if(input != null)
+                        {
+                            if(key != "photo"){
+                                input.value = row[key];
+                            }
+                        }
+                    }
+                }
+                }
+            }
+	    }
+        ////////////////////////////////////////////////////////////
+        function create(){
+            let label_auther=document.createElement('label')
+            label_auther.setAttribute('for','song_name')
+            label_auther.setAttribute('class','form-label')
+            label_auther.textContent=`Name-${counters}`
+            let input_auther=document.createElement('input')
+            input_auther.setAttribute('name','song_name')
+            input_auther.setAttribute('class','form-control')
+            input_auther.setAttribute('id',`song_name_${counters}`)
+            let content_div_one=document.createElement('div')
+            content_div_one.setAttribute('class','mt-2')
+            content_div_one.append(label_auther)
+            content_div_one.append(input_auther)
+
+
+            let label_titre=document.createElement('label')
+            label_titre.setAttribute('for','singer')
+            label_titre.setAttribute('class','form-label')
+            label_titre.textContent=`Titre-${counters}`
+            let input_titre=document.createElement('input')
+            input_titre.setAttribute('name','singer')
+            input_titre.setAttribute('class','form-control')
+            input_titre.setAttribute('id',`singer_${counters}`)
+            let content_div_two=document.createElement('div')
+            content_div_two.setAttribute('class','mt-2')
+            content_div_two.append(label_titre)
+            content_div_two.append(input_titre)
+
+
+            let textarea_words=document.createElement('textarea')
+            textarea_words.setAttribute('name','words')
+            textarea_words.setAttribute('class','form-control')
+            textarea_words.setAttribute('id',`words_${counters}`)
+            let content_div_three=document.createElement('div')
+            content_div_three.setAttribute('class','mt-2')
+            content_div_three.append(textarea_words)
+            content_div_three.append(textarea_words)
+            //let img=document.createElement('input')
+            //img.setAttribute('name','img')
+            //img.setAttribute('id',`img`)
+            //img.setAttribute('type',`file`)
+
+
+
+            let div_field=document.createElement('div')
+            div_field.setAttribute('class','field_content')
+
+            div_field.append(content_div_one)
+            div_field.append(content_div_two)
+            div_field.append(content_div_three)
+            modal_body.append(div_field)
+        }
+        create()
+
+
+        document.querySelector('.btn_add').addEventListener('click',function(){
+            counters++
+            create()
+        })
+
+
+
+        document.querySelector('.btn_remove').addEventListener('click',function(){
+            document.querySelectorAll(`.field_content`)[counters].remove()
+            counters--
+        })
+
+
+        
+        //console.log(counters)
+
+        function add(e){
+            let data=[]
+            e.preventDefault()
+            let fields_div=document.querySelectorAll('.add-new-modals .field_content')
+            //console.log(fields_div)
+            fields_div.forEach((item,index)=>{
+                let title=item.querySelector(`#singer_${index}`).value 
+                let name=item.querySelector(`#song_name_${index}`).value 
+                let words=item.querySelector(`#words_${index}`).value 
+                let obj={}
+                obj['singer_'+index]=title 
+                obj['song_name_'+index]=name
+                obj['words_'+index]=words
+                data.push(obj)
+            })
+            send_data(data,'add')
+        }
+
+
+
 
     </script>
 
