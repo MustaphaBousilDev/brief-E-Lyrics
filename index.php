@@ -1,20 +1,26 @@
 <?php
+require './models/init.php';
+if(!isset($_SESSION['id'])){
+    header('Location:login.php');
+}
+
+
 $name="";
 if(isset($_SESSION['name'])){
     $username=$_SESSION['name'];
 } 
-require './models/init.php';
+
 $user=new User();
 $count_user=$user->admin_count();
-echo $count_user;
+
 //
 $lurix=new Lyrix();
 $count_lurix=$lurix->lurix_count();
-echo $count_lurix;
+
 
 $lurix=new Lyrix();
 $count_lurixx=$lurix->song_name_count();
-echo $count_lurixx;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +44,7 @@ echo $count_lurixx;
                 <img src="https://image.winudf.com/v2/image/Y29tLmJhbGVmb290Lk1vbmtleURMdWZmeVdhbGxwYXBlcl9zY3JlZW5fMF8xNTI0NTE5MTEwXzAyOA/screen-0.jpg?fakeurl=1&type=.webp" alt=""/>
                </div>
                <div class="logout-user">
-                <a href="#">Log-Out</a>
+                <a href="logout.php">Log-Out</a>
                </div>
             </div>
         </div>
@@ -47,7 +53,7 @@ echo $count_lurixx;
                 <div class="box-statistiq box-1">
                     <div class="info">
                         <h2>Total Admin</h2>
-                        <p>40,765</p>
+                        <p><?= $count_user?></p>
                     </div>
                     <div class="icon">
                         <i class='bx bx-user icon-user'></i>
@@ -56,7 +62,7 @@ echo $count_lurixx;
                 <div class="box-statistiq box-2">
                     <div class="info">
                         <h2>Total Admin</h2>
-                        <p>40,765</p>
+                        <p><?=$count_lurix?></p>
                     </div>
                     <div class="icon">
                         <i class='bx bx-pen icon-titre'></i>
@@ -65,7 +71,7 @@ echo $count_lurixx;
                 <div class="box-statistiq box-3">
                     <div class="info">
                         <h2>Total Artiste</h2>
-                        <p>40,765</p>
+                        <p><?=$count_lurixx?></p>
                     </div>
                     <div class="icon">
                         <i class='bx bx-group icon-artiste'></i>

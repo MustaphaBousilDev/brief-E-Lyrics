@@ -21,9 +21,9 @@ class User{
                 $result=$result[0];
                 $_SESSION['id']=$result['id'];
                 $_SESSION['name']=$result['name'];
-                $_SESSION['photo']=$result['img'];
+                //$_SESSION['photo']=$result['img'];
                 $_SESSION['email']=$result['email'];
-                header('Location:index.html');
+                header('Location:index.php');
                 die;
             }
             $this->errors[]="Wrong Email or Password";
