@@ -7,6 +7,14 @@ require './models/init.php';
 $user=new User();
 $count_user=$user->admin_count();
 echo $count_user;
+//
+$lurix=new Lyrix();
+$count_lurix=$lurix->lurix_count();
+echo $count_lurix;
+
+$lurix=new Lyrix();
+$count_lurixx=$lurix->song_name_count();
+echo $count_lurixx;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,8 +76,14 @@ echo $count_user;
                 <button  onclick="addModal.show()" style="width: 60px;height:30px" class="border-0 btn btn-primary py-4 text-md px-5 pointer-event d-flex justify-content-center align-items-center">Add</button>
                 <div class="form-outline mx-3 position-relative">
                     <i class='bx bx-search position-absolute' style="top:25%;left: 5px;font-size: 18px;color:rgb(197, 197, 200)" ></i>
-                    <input type="search" id="form1" class="form-control py-2 px-4" placeholder="Search" aria-label="Search" />
-                  </div>
+                    <input type="search" onkeyup="showHint(this.value)" id="form1" class="form-control py-2 px-4" placeholder="Search" aria-label="Search" />
+                </div>
+                <select class="form-select" oninput='getState(event)'>
+                    <option value="date">Sort By Date</option>
+                    <option value="name">Sort By song Name</option>
+                    <option value="title">Sort By song Title</option>
+
+                </select>
             </div>
             <div class="cards-musique my-3 d-flex justify-content-center" style="flex-wrap: wrap;" >
                 
@@ -108,33 +122,10 @@ echo $count_user;
               <h5 class="modal-title" id="edit-new-modalLabel" >Edit Lyrics</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" class="js-edit-user-form">
+            <form method="POST" class="js-edit-user-form" onsubmit="edit(event)">
             <div class="modal-body">
-                  <label class="mt-2 d-block" style="cursor: pointer;text-align: center;">
-                      <img src="images/user.png" class="js-add-image mx-auto d-block" style="width:150px;height: 150px;object-fit: cover;">
-                      <div class="input-group mb-3">
-                        <input id="image"  onchange="display_image(this.files[0])" type="file" class="form-control" id="inputGroupFile01" required hidden>
-                      </div>
-                      <script>
-                          function display_image(file)
-                          {
-                              let allowed = ['jpg','jpeg','png'];
-  
-                              let ext = file.name.split(".").pop();
-                              
-                              if(allowed.includes(ext.toLowerCase()))
-                              {
-                                  document.querySelector('.js-add-image').src = URL.createObjectURL(file);
-                                  image_added = true;
-                              }else 
-                              {
-                                  alert("Only the following image types are allowed:"+ allowed.toString(", "));
-                              }
-  
-                          }
-                      </script>
-                  </label>
                     <div class="mt-2">
+                    <input type="hidden" id="id" name="id"/>
                     <label for="name" class="form-label">Titre</label>
                     <input  type="text" class="form-control" id="title" name="name" placeholder="Name" required>
                     </div>
@@ -150,7 +141,7 @@ echo $count_user;
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Save</button>
                     </div>
             </form>
           </div>
@@ -160,52 +151,27 @@ echo $count_user;
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="add-new-modalLabel" >Show Lyrics</h5>
+              <h5 class="modal-title" id="show-new-modalLabel" >Show Lyrics</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="POST" class="js-show-user-form">
+            <form class="js-show-user-form">
             <div class="modal-body">
-                  <label class="mt-2 d-block" style="cursor: pointer;text-align: center;">
-                      <img src="images/user.png" class="js-add-image mx-auto d-block" style="width:150px;height: 150px;object-fit: cover;">
-                      <div class="input-group mb-3">
-                        <input id="image"  onchange="display_image(this.files[0])" type="file" class="form-control" id="inputGroupFile01" required hidden>
-                      </div>
-                      <script>
-                          function display_image(file)
-                          {
-                              let allowed = ['jpg','jpeg','png'];
-  
-                              let ext = file.name.split(".").pop();
-                              
-                              if(allowed.includes(ext.toLowerCase()))
-                              {
-                                  document.querySelector('.js-add-image').src = URL.createObjectURL(file);
-                                  image_added = true;
-                              }else 
-                              {
-                                  alert("Only the following image types are allowed:"+ allowed.toString(", "));
-                              }
-  
-                          }
-                      </script>
-                  </label>
                     <div class="mt-2">
                     <label for="name" class="form-label">Titre</label>
-                    <input  type="text" class="form-control" id="title" name="name" placeholder="Name" required>
+                    <input disabled  type="text" class="form-control" id="title-show" name="name" placeholder="Name" required>
                     </div>
                     <div class="mt-2">
                     <label for="quantity" class="form-label">Auther Name</label>
-                    <input  type="text" class="form-control" id="auther" name="auther"  required>
+                    <input disabled  type="text" class="form-control" id="auther-show" name="auther"  required>
                     </div>
                     <div class="mt-2">
-                        <textarea   id="words" name="description" class="form-control">
+                        <textarea disabled   id="words-show" name="description" class="form-control">
             
                         </textarea>
                     </div>
                     </div>
                     <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
                     </div>
             </form>
           </div>
@@ -225,13 +191,12 @@ echo $count_user;
         //console.log(counters)
         send_data([], 'read')
         function send_data(arr, type){
-            console.log(arr)
             var forms = new FormData();
            for(let i=0;i<arr.length;i++){
                 for(key in arr[i]){
                     forms.append(key,arr[i][key])
                 }
-           }
+            }
             forms.append('data_type',type);
             var ajax = new XMLHttpRequest();
             ajax.addEventListener('readystatechange',function(){
@@ -259,18 +224,19 @@ echo $count_user;
                     if(typeof obj.data == 'object'){
                         for (var i = 0; i < obj.data.length; i++) {
                         let row = obj.data[i];
-                        console.log('bitch')
-                        console.log(row)
+                        //console.log('bitch')
+                        //console.log(row)
                         str += `
                             <div class="card" style="width: 18rem;background-color: transparent;border: none;margin-bottom: 10px;">
                             <div style="width: 95%;background-color: rgb(220, 220, 222);margin: auto;">
                             <div class="card-body">
                                 <h5 class="card-title">${row.singer}</h5>
                                 <p class="card-text">${row.song_name}</p>
+                                <span class="card-text">${row.date_created}</span>
                                 <div class="d-flex gap-2">
                                     <button onclick="editModal.show();getId(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-success rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-edit-alt' ></i></button>
-                                    <button style="width: 30px;height:30px" class="border-0 btn btn-sm btn-danger rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-x'></i></button>
-                                    <button onclick="showModal.show()" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-warning rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;color:#fff;" class='bx bx-show-alt'></i></button>
+                                    <button onclick="deleteId(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-danger rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-x'></i></button>
+                                    <button onclick="showModal.show();show(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-warning rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;color:#fff;" class='bx bx-show-alt'></i></button>
                                 </div>
                                 </div>
                             </div>
@@ -285,7 +251,7 @@ echo $count_user;
                 alert(obj.data);
                 send_data([],'read');
                 }else
-                if(obj.data_type == 'edit')
+                if(obj.data_type == 'update')
                 {
                     alert(obj.data);
                     send_data([],'read');
@@ -295,22 +261,88 @@ echo $count_user;
                     alert(obj.data);
                     send_data([],'read');
                 }else
-                if(obj.data_type == 'get-edit-row'){
+                if(obj.data_type == 'get-edit'){
                 let row = obj.data;
                 if(typeof row == 'object'){
-                    
-                    let myModal = document.querySelector(".myModaledit");
-                    
-                    for (key in row){
-                        let input = myModal.querySelector("#"+key);
-                        if(input != null)
-                        {
-                            if(key != "photo"){
-                                input.value = row[key];
-                            }
-                        }
-                    }
+                    let myModal = document.querySelector("#edit-new-modal");
+                    myModal.querySelector('#title').value=row.singer
+                    myModal.querySelector('#auther').value=row.song_name
+                    myModal.querySelector('#words').value=row.words 
+                    myModal.querySelector('#id').value=row.id  
                 }
+                
+                }
+                else
+                if(obj.data_type == 'show'){
+                let row = obj.data;
+                if(typeof row == 'object'){
+                    let myModal = document.querySelector("#show-new-modal");
+                    myModal.querySelector('#title-show').value=row.singer
+                    myModal.querySelector('#auther-show').value=row.song_name
+                    myModal.querySelector('#words-show').value=row.words  
+                }
+                
+                
+                }
+                else
+                if(obj.data_type == 'sorting'){
+                    let tbody = document.querySelector(".cards-musique");
+                    let str = "";
+                    if(typeof obj.data == 'object'){
+                        for (var i = 0; i < obj.data.length; i++) {
+                        let row = obj.data[i];
+                        //console.log('bitch')
+                        //console.log(row)
+                        str += `
+                            <div class="card" style="width: 18rem;background-color: transparent;border: none;margin-bottom: 10px;">
+                            <div style="width: 95%;background-color: rgb(220, 220, 222);margin: auto;">
+                            <div class="card-body">
+                                <h5 class="card-title">${row.singer}</h5>
+                                <p class="card-text">${row.song_name}</p>
+                                <span class="card-text">${row.date_created}</span>
+                                <div class="d-flex gap-2">
+                                    <button onclick="editModal.show();getId(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-success rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-edit-alt' ></i></button>
+                                    <button onclick="deleteId(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-danger rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-x'></i></button>
+                                    <button onclick="showModal.show();show(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-warning rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;color:#fff;" class='bx bx-show-alt'></i></button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        `;
+                        }
+                        tbody.innerHTML = str;
+                    }else{str = "<tr><td>No records found!</td></tr>";}
+                    
+                }
+                else
+                if(obj.data_type == 'search'){
+                    let tbody = document.querySelector(".cards-musique");
+                    let str = "";
+                    if(typeof obj.data == 'object'){
+                        for (var i = 0; i < obj.data.length; i++) {
+                        let row = obj.data[i];
+                        //console.log('bitch')
+                        //console.log(row)
+                        str += `
+                            <div class="card" style="width: 18rem;background-color: transparent;border: none;margin-bottom: 10px;">
+                            <div style="width: 95%;background-color: rgb(220, 220, 222);margin: auto;">
+                            <div class="card-body">
+                                <h5 class="card-title">${row.singer}</h5>
+                                <p class="card-text">${row.song_name}</p>
+                                <span class="card-text">${row.date_created}</span>
+                                <div class="d-flex gap-2">
+                                    <button onclick="editModal.show();getId(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-success rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-edit-alt' ></i></button>
+                                    <button onclick="deleteId(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-danger rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;" class='bx bx-x'></i></button>
+                                    <button onclick="showModal.show();show(${row.id})" style="width: 30px;height:30px" class="border-0 btn btn-sm btn-warning rounded-circle pointer-event d-flex justify-content-center align-items-center"><i style="font-weight: bold;color:#fff;" class='bx bx-show-alt'></i></button>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        `;
+                        }
+                        tbody.innerHTML = str;
+                    }else{str = "<tr><td>No records found!</td></tr>";}
+                    
                 }
             }
 	    }
@@ -402,6 +434,70 @@ echo $count_user;
                 data.push(obj)
             })
             send_data(data,'add')
+        }
+        function getId(id){
+            let data_id=[]
+            let obj={
+                id:id 
+            }
+            data_id.push(obj)
+            send_data(data_id,'get-edit');
+    
+	    }
+        function show(id){
+            let data_id=[]
+            let obj={
+                id:id 
+            }
+            data_id.push(obj)
+            send_data(data_id,'show');
+    
+	    }
+        function deleteId(id){
+            let data_id=[]
+            let obj={
+                id:id 
+            }
+            data_id.push(obj)
+            send_data(data_id,'delete');
+    
+	    }
+        function edit(e){
+            e.preventDefault()
+            let data_edits=[]
+            let edit_modal=document.querySelector('#edit-new-modal')
+            let title=edit_modal.querySelector(`#title`).value 
+            let name=edit_modal.querySelector(`#auther`).value 
+            let words=edit_modal.querySelector(`#words`).value 
+            let id=edit_modal.querySelector(`#id`).value 
+            id=parseInt(id);
+            let obj={}
+            obj['singer']=title 
+            obj['song_name']=name
+            obj['words']=words
+            obj['id']=id
+            data_edits.push(obj)
+            send_data(data_edits,'update')
+        }
+
+        function getState(e){
+            
+            let data_sort=[]
+            let obj={
+                sort:e.target.value 
+            }
+            data_sort.push(obj)
+            send_data(data_sort,'sorting');
+        }
+
+        function showHint(value){
+            console.log(value)
+            let data_search=[] 
+            let obj={
+                value:value 
+            }
+            data_search.push(obj)
+            send_data(data_search,'search');
         }
 
 

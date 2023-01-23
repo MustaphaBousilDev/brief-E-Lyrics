@@ -7,17 +7,39 @@ global $connection;
 	$info['data_type'] = $_POST['data_type'];
     if($_POST['data_type'] == 'read'){
 		$lyrixs=new Lyrix();
-		$data=$lyrixs->get_lurixs();
+        $order="ORDER BY id DESC";
+		$data=$lyrixs->get_lurixs($order);
 		$info['data'] 	=$data;
 	}
+    else if($_POST['data_type'] == 'sorting'){
+        $sort=$_POST['sort'];
+        $lyrixs=new Lyrix();
+        $order="ORDER BY id DESC";
+        if($sort=='name'){
+            $order="ORDER BY song_name ASC";
+        }else if($sort=="date"){
+            $order="ORDER by date_created ASC";
+        }else if ($sort=="title"){
+            $order="ORDER by singer DESC";
+        }
+		$data=$lyrixs->get_lurixs($order);
+		$info['data'] 	=$data;
+    }
+    else if($_POST['data_type'] == 'search'){
+        $search="%".$_POST['value']."%";
+        $lyrixs=new Lyrix();
+        
+		$data=$lyrixs->search_lurix($search);
+		$info['data'] 	=$data;
+    }
 	else
-	if($_POST['data_type'] == 'get-edit-row')
+	if($_POST['data_type'] == 'get-edit' || $_POST['data_type'] == 'show')
 	{
-		$id =$_POST['id'];
-		
-		$gare=new Trains();
-		$data=$gare->get_train($id);
-		
+		$id =(int)$_POST['id'];
+        $lyrixs=new Lyrix();
+		$data=$lyrixs->get_lurix($id);
+		//$gare=new Trains();
+		//$data=$gare->get_train($id);
         $info['data'] 	= $data;
 	}
 	else if($_POST['data_type'] == 'add'){
@@ -41,21 +63,17 @@ global $connection;
         
 	}
 	else if($_POST['data_type'] == 'delete'){
-		$id =$_POST['id'];
-        $user=new Trains();
-		$user->delete_train($id);
-
+        $id=$_POST['id'];
+		$lyrixs=new Lyrix();
+        $result=$lyrixs->delete_lurix($id);
+		$info['data'] 	= "Record was  deleted";
 	}
 	
-	if($_POST['data_type'] == 'edit'){
+	if($_POST['data_type'] == 'update'){
 		$id=$_POST['id'];
-		/*
-		
-		die;
-		*/
-		$voyege=new Trains();
-		$voyege->edit_train($_POST);
-		$info['data'] 	= "Record was fucking edited!";
+		$lyrixs=new Lyrix();
+        $result=$lyrixs->edit_lyrix($_POST);
+		$info['data'] 	= "Record was  edited!";
         
 	}
 	
