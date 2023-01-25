@@ -13,7 +13,7 @@ body{
 }
 
 .form-field{
-   height:500px;
+ 
    width: 30%;
    border-radius: 20px;
    padding: 70px 20px;
@@ -75,27 +75,26 @@ body{
 }
 @media screen and (max-width:1200px){
     .form-field{
-        height:500px;
+      
         width: 60%;
     }
 }
 
 @media screen and (max-width:1080px){
     .form-field{
-        height:500px;
+      
         width: 70%;
     }
 }
 @media screen and (max-width:800px){
     .form-field{
-        height:500px;
+       
         width: 80%;
     }
 } 
 
 @media screen and (max-width:600px){
     .form-field{
-        height:400px;
         width: 90%;
         padding: 40px 20px;
     }

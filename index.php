@@ -31,6 +31,10 @@ $count_lurixx=$lurix->song_name_count();
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/guillaumepotier/Parsley.js@2.9.2/doc/assets/docs.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/guillaumepotier/Parsley.js@2.9.2/src/parsley.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
@@ -103,7 +107,7 @@ $count_lurixx=$lurix->song_name_count();
               <h5 class="modal-title" id="add-new-modalLabel" >Add new Lyrics</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form  class="js-add-user-form" onsubmit="add(event)">
+            <form  class="js-add-user-form needs-validation" data-parsley-validate  onsubmit="add(event)">
             <div class="modal-body">
                     
             </div>
@@ -114,7 +118,7 @@ $count_lurixx=$lurix->song_name_count();
                     <button type="button" class="btn btn-secondary mx-1" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn_add btn-sm  mx-1 btn btn-success rounded-circle d-flex justify-content-center align-items-center" style="width: 25px;height:25px" >+</button>
                     <button type="button" class="btn_remove btn-sm  mx-1 btn btn-danger rounded-circle d-flex justify-content-center align-items-center" style="width: 25px;height:25px">-</button>
-                    <button type="submit" class="btn submit-save  mx-1 btn-primary" data-bs-dismiss="modal">Save</button>
+                    <button type="submit" class="btn submit-save-add  mx-1 btn-primary" >Save</button>
                     </div>
                     
             </form>
@@ -184,6 +188,7 @@ $count_lurixx=$lurix->song_name_count();
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    
     <script src="assets/js/index.js"></script>
     <script type="text/javascript">
         const addModal = new bootstrap.Modal('#add-new-modal', {});
@@ -195,7 +200,7 @@ $count_lurixx=$lurix->song_name_count();
         let form=document.querySelector('.add-new-modals form')
         let modal_body=document.querySelector('.add-new-modals form .modal-body')
         //console.log(counters)
-        send_data([], 'read')
+        send_data([], 'read')  
         function send_data(arr, type){
             var forms = new FormData();
            for(let i=0;i<arr.length;i++){
@@ -358,14 +363,20 @@ $count_lurixx=$lurix->song_name_count();
             label_auther.setAttribute('for','song_name')
             label_auther.setAttribute('class','form-label')
             label_auther.textContent=`Name-${counters}`
+
+            
+            
+
             let input_auther=document.createElement('input')
             input_auther.setAttribute('name','song_name')
+            //input_auther.setAttribute('required','')
             input_auther.setAttribute('class','form-control')
             input_auther.setAttribute('id',`song_name_${counters}`)
             let content_div_one=document.createElement('div')
             content_div_one.setAttribute('class','mt-2')
             content_div_one.append(label_auther)
             content_div_one.append(input_auther)
+        
 
 
             let label_titre=document.createElement('label')
@@ -374,6 +385,7 @@ $count_lurixx=$lurix->song_name_count();
             label_titre.textContent=`Titre-${counters}`
             let input_titre=document.createElement('input')
             input_titre.setAttribute('name','singer')
+            //input_titre.setAttribute('required','')
             input_titre.setAttribute('class','form-control')
             input_titre.setAttribute('id',`singer_${counters}`)
             let content_div_two=document.createElement('div')
@@ -384,12 +396,15 @@ $count_lurixx=$lurix->song_name_count();
 
             let textarea_words=document.createElement('textarea')
             textarea_words.setAttribute('name','words')
+            //textarea_words.setAttribute('required','')
             textarea_words.setAttribute('class','form-control')
             textarea_words.setAttribute('id',`words_${counters}`)
+            
             let content_div_three=document.createElement('div')
             content_div_three.setAttribute('class','mt-2')
             content_div_three.append(textarea_words)
             content_div_three.append(textarea_words)
+            
             //let img=document.createElement('input')
             //img.setAttribute('name','img')
             //img.setAttribute('id',`img`)
@@ -416,7 +431,7 @@ $count_lurixx=$lurix->song_name_count();
 
 
         document.querySelector('.btn_remove').addEventListener('click',function(){
-            document.querySelectorAll(`.field_content`)[counters].remove()
+            document.querySelectorAll(`.field_content`)[counters].remove() 
             counters--
         })
 
@@ -430,16 +445,49 @@ $count_lurixx=$lurix->song_name_count();
             let fields_div=document.querySelectorAll('.add-new-modals .field_content')
             //console.log(fields_div)
             fields_div.forEach((item,index)=>{
+                let name=item.querySelector(`#song_name_${index}`).value
+                item.querySelector(`#song_name_${index}`).style.border="1px solid green"
+                
+                if(name.trim()==''){
+                    item.querySelector(`#song_name_${index}`).style.border="1px solid red"
+                    return 
+                } 
+                item.querySelector(`#singer_${index}`).style.border="1px solid green"
                 let title=item.querySelector(`#singer_${index}`).value 
-                let name=item.querySelector(`#song_name_${index}`).value 
+                if(title.trim()==''){
+                    item.querySelector(`#singer_${index}`).style.border="1px solid red"
+                    return 
+                }
+                item.querySelector(`#words_${index}`).style.border="1px solid green"
                 let words=item.querySelector(`#words_${index}`).value 
+                if(words.trim()==''){
+                    item.querySelector(`#words_${index}`).style.border="1px solid red"
+                    return 
+                } 
+                
+                if(index==fields_div.length){
+                    if(name.trim()!='' && title.trim()!='' && words.trim()!=''){
+                    document.querySelector('.js-add-user-form').reset()
+                    document.querySelector('.submit-save-add').setAttribute('data-bs-dismiss','modal')
+                    }else{
+                        return 
+                    }
+                }
                 let obj={}
                 obj['singer_'+index]=title 
                 obj['song_name_'+index]=name
                 obj['words_'+index]=words
                 data.push(obj)
+                
             })
+            
+           
             send_data(data,'add')
+        
+            document.querySelector('.submit-save-add').click()
+            
+            
+            
         }
         function getId(id){
             let data_id=[]
@@ -503,14 +551,14 @@ $count_lurixx=$lurix->song_name_count();
                 value:value 
             }
             data_search.push(obj)
+           
             send_data(data_search,'search');
+           
         }
 
 
-
-
+        
     </script>
-
 
 </body>
 </html>

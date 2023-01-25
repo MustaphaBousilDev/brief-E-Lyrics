@@ -56,7 +56,12 @@ class Lyrix{
         $DB=new Database();
         $data=array();
         $result=$DB->read($query,$data);
-        $count=count($result);
+        if($result){
+            $count=count($result);
+        }else{
+            $count=0;
+        }
+
 
         return $count;
     }
@@ -65,7 +70,11 @@ class Lyrix{
         $DB=new Database();
         $data=array();
         $result=$DB->read($query,$data);
-        $count=count($result);
+        if($result){
+            $count=count($result);
+        }else{
+            $count=0;
+        }
 
         return $count;
     }
