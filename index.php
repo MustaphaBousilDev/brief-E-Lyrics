@@ -65,7 +65,7 @@ $count_lurixx=$lurix->song_name_count();
                 </div>
                 <div class="box-statistiq box-2">
                     <div class="info">
-                        <h2>Total Admin</h2>
+                        <h2>Total Lurix</h2>
                         <p><?=$count_lurix?></p>
                     </div>
                     <div class="icon">
@@ -369,6 +369,7 @@ $count_lurixx=$lurix->song_name_count();
 
             let input_auther=document.createElement('input')
             input_auther.setAttribute('name','song_name')
+            input_auther.setAttribute('required','')
             //input_auther.setAttribute('required','')
             input_auther.setAttribute('class','form-control')
             input_auther.setAttribute('id',`song_name_${counters}`)
@@ -384,6 +385,7 @@ $count_lurixx=$lurix->song_name_count();
             label_titre.setAttribute('class','form-label')
             label_titre.textContent=`Titre-${counters}`
             let input_titre=document.createElement('input')
+            input_titre.setAttribute('required','')
             input_titre.setAttribute('name','singer')
             //input_titre.setAttribute('required','')
             input_titre.setAttribute('class','form-control')
@@ -396,6 +398,7 @@ $count_lurixx=$lurix->song_name_count();
 
             let textarea_words=document.createElement('textarea')
             textarea_words.setAttribute('name','words')
+            textarea_words.setAttribute('required','')
             //textarea_words.setAttribute('required','')
             textarea_words.setAttribute('class','form-control')
             textarea_words.setAttribute('id',`words_${counters}`)
@@ -465,28 +468,22 @@ $count_lurixx=$lurix->song_name_count();
                     return 
                 } 
                 
-                if(index==fields_div.length){
-                    if(name.trim()!='' && title.trim()!='' && words.trim()!=''){
-                    document.querySelector('.js-add-user-form').reset()
-                    document.querySelector('.submit-save-add').setAttribute('data-bs-dismiss','modal')
-                    }else{
-                        return 
-                    }
-                }
                 let obj={}
                 obj['singer_'+index]=title 
                 obj['song_name_'+index]=name
                 obj['words_'+index]=words
                 data.push(obj)
+
                 
             })
             
            
             send_data(data,'add')
-        
+            document.querySelector('.js-add-user-form').reset()
+            document.querySelector('.submit-save-add').setAttribute('data-bs-dismiss','modal')
             document.querySelector('.submit-save-add').click()
             
-            
+            document.querySelector('.submit-save-add').setAttribute('data-bs-dismiss','modalss')
             
         }
         function getId(id){
